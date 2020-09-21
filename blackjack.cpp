@@ -76,9 +76,9 @@ int Card::GetValue() const
         value = m_Rank;
         // Value is 10 for face cards
         if (value > 10)
-		{
+	{
             value = 10;
-		}
+	}
     }
     return value;
 }
@@ -146,40 +146,40 @@ int Hand::GetTotal() const
 {
     // If no cards in hand, return 0
     if (m_Cards.empty())
-	{
+    {
         return 0;
-	}
+    }
   
     // If a first card has value of 0, then card is face down; return 0
     if (m_Cards[0]->GetValue() == 0)
-	{
+    {
         return 0;
-	}
+    }
     
     // Add up card values, treat each Ace as 1
     int total = 0;
     vector<Card*>::const_iterator iter;
     for (iter = m_Cards.begin(); iter != m_Cards.end(); ++iter)
-	{
+    {
         total += (*iter)->GetValue();
-	}
+    }
                   
     // Determine if hand contains an Ace
     bool containsAce = false;
     for (iter = m_Cards.begin(); iter != m_Cards.end(); ++iter)
-	{
+    {
         if ((*iter)->GetValue() == Card::ACE)
-		{
+	{
             containsAce = true;
-		}
 	}
+    }
           
     // If hand contains Ace and total is low enough, treat Ace as 11
     if (containsAce && total <= 11)
-	{
+    {
         // Add only 10 since we've already added 1 for the Ace
         total += 10;   
-	}
+    }
             
     return total;
 }
@@ -312,13 +312,13 @@ bool House::IsHitting() const
 void House::FlipFirstCard()
 {
     if (!(m_Cards.empty()))
-	{
+    {
         m_Cards[0]->Flip();
-	}
+    }
     else
-	{
-		cout << "No card to flip!\n";
-	}
+    {
+	cout << "No card to flip!\n";
+    }
 }
 
 // A blackjack deck.
@@ -396,9 +396,9 @@ void Deck::AdditionalCards(GenericPlayer& aGenericPlayer)
         cout << aGenericPlayer << endl;
         
         if (aGenericPlayer.IsBusted())
-		{
+	{
             aGenericPlayer.Bust();
-		}
+	}
     }
 } 
 
@@ -425,12 +425,12 @@ Game::Game(const vector<string>& names)
     // Create a vector of players from a vector of names       
     vector<string>::const_iterator pName;
     for (pName = names.begin(); pName != names.end(); ++pName)
-	{
+    {
         m_Players.push_back(Player(*pName));
-	}
+    }
 
-	// Seed the random number generator
-	srand(static_cast<unsigned int>(time(0)));    
+   // Seed the random number generator
+    srand(static_cast<unsigned int>(time(0)));    
     m_Deck.Populate();
     m_Deck.Shuffle();
 }
@@ -444,11 +444,11 @@ void Game::Play()
     vector<Player>::iterator pPlayer;
     for (int i = 0; i < 2; ++i)
     {
-        for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) 
-		{
-            m_Deck.Deal(*pPlayer);
-		}
-        m_Deck.Deal(m_House);
+	 for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) 
+	 {
+	      m_Deck.Deal(*pPlayer);
+	 }
+         m_Deck.Deal(m_House);
     }
     
     // Hide house's first card
@@ -456,16 +456,16 @@ void Game::Play()
     
     // Display everyone's hand
     for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) 
-	{
+    {
         cout << *pPlayer << endl;
-	}
+    }
     cout << m_House << endl;
 
     // Deal additional cards to players
     for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer)
-	{
+    {
         m_Deck.AdditionalCards(*pPlayer);    
-	}
+    }
 
     // Reveal house's first card
     m_House.FlipFirstCard();    
@@ -478,12 +478,12 @@ void Game::Play()
     {
         // Everyone still playing wins
         for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) 
-		{
+	{
             if ( !(pPlayer->IsBusted()) )
-			{
+	    {
                 pPlayer->Win();
-			}
-		}
+	    }
+	}
     }
     else
     {
@@ -512,9 +512,9 @@ void Game::Play()
 
     // Remove everyone's cards
     for (pPlayer = m_Players.begin(); pPlayer != m_Players.end(); ++pPlayer) 
-	{
+    {
         pPlayer->Clear();
-	}
+    }
     m_House.Clear();
 }
 
